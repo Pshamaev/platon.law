@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free Immigration Case Assessment - Platon Law</title>
     <style>
-        /* ... (весь предыдущий CSS остаётся тот же) ... */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1e293b; line-height: 1.6; }
         .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4rem 2rem; text-align: center; }
@@ -31,6 +30,12 @@
         .form-input { width: 100%; padding: 0.875rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; }
         .form-input:focus { outline: none; border-color: #667eea; }
         .form-textarea { min-height: 150px; resize: vertical; font-family: inherit; }
+        .upload-area { border: 3px dashed #cbd5e1; border-radius: 16px; padding: 3rem; text-align: center; cursor: pointer; transition: all 0.3s; background: #f8fafc; margin-bottom: 1rem; }
+        .upload-area:hover { border-color: #667eea; background: #f0f4ff; }
+        .upload-area.dragover { border-color: #667eea; background: #e8f0ff; }
+        .upload-icon { font-size: 4rem; margin-bottom: 1rem; color: #667eea; }
+        .upload-text { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .upload-subtext { color: #64748b; font-size: 0.95rem; }
         .button { background: #667eea; color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1.125rem; width: 100%; transition: all 0.3s; }
         .button:hover:not(:disabled) { background: #5568d3; transform: translateY(-2px); }
         .button:disabled { background: #cbd5e1; cursor: not-allowed; }
@@ -57,6 +62,9 @@
         .tag-missing { background: #fee2e2; color: #991b1b; }
         .hidden { display: none; }
         .error-message { background: #fee2e2; border: 2px solid #ef4444; color: #991b1b; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        .file-uploaded { background: #dcfce7; border: 2px solid #10b981; color: #065f46; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
+        .remove-file { background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.875rem; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .score-number { font-size: 3.5rem; } }
     </style>
 </head>
 <body>
@@ -105,8 +113,27 @@
                     <span id="selected-case-name">EB1A</span> Assessment
                 </h2>
 
+                <!-- FILE UPLOAD AREA -->
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">📄</div>
+                    <div class="upload-text">Drag & drop your CV/Resume here</div>
+                    <div class="upload-subtext">or click to browse (PDF, DOCX, TXT • max 5MB)</div>
+                    <input type="file" id="file-input" style="display: none;" accept=".pdf,.doc,.docx,.txt">
+                </div>
+
+                <div id="file-uploaded-indicator" class="file-uploaded hidden">
+                    <div>
+                        <strong>✅ File uploaded:</strong> <span id="file-name"></span>
+                    </div>
+                    <button class="remove-file" onclick="removeFile()">Remove</button>
+                </div>
+
+                <div style="text-align: center; margin: 2rem 0; color: #94a3b8; font-weight: 600;">
+                    OR
+                </div>
+
                 <div class="form-group">
-                    <label class="form-label">Your CV/Resume Text *</label>
+                    <label class="form-label">Paste your CV text:</label>
                     <textarea 
                         id="cv-text"
                         class="form-input form-textarea" 
@@ -124,11 +151,7 @@ Publications:
 
 Awards:
 - Best Paper Award, ACL 2023
-- Dean's Excellence Award, MIT 2022
-
-Patents: 5 US patents in machine learning
 ..."
-                        required
                     ></textarea>
                 </div>
 
@@ -217,6 +240,7 @@ Patents: 5 US patents in machine learning
     <script>
         let selectedCaseType = '';
         let analysisResult = null;
+        let uploadedFile = null;
 
         function selectCase(caseType) {
             selectedCaseType = caseType;
@@ -224,6 +248,84 @@ Patents: 5 US patents in machine learning
             document.getElementById('step-selection').classList.add('hidden');
             document.getElementById('step-upload').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // File upload handling
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            handleFile(file);
+        });
+
+        async function handleFile(file) {
+            if (!file) return;
+
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showError('File too large. Maximum size is 5MB.');
+                return;
+            }
+
+            // Check file type
+            const allowedTypes = ['.pdf', '.doc', '.docx', '.txt'];
+            const fileExt = '.' + file.name.split('.').pop().toLowerCase();
+            if (!allowedTypes.includes(fileExt)) {
+                showError('Invalid file type. Please upload PDF, DOC, DOCX, or TXT file.');
+                return;
+            }
+
+            uploadedFile = file;
+
+            // Show file uploaded indicator
+            document.getElementById('file-name').textContent = file.name;
+            document.getElementById('file-uploaded-indicator').classList.remove('hidden');
+            uploadArea.style.display = 'none';
+
+            // Read file content
+            try {
+                const text = await readFileAsText(file);
+                document.getElementById('cv-text').value = text;
+            } catch (error) {
+                console.error('Error reading file:', error);
+                showError('Could not read file content. Please try pasting text instead.');
+            }
+        }
+
+        function readFileAsText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = (e) => reject(e);
+                reader.readAsText(file);
+            });
+        }
+
+        function removeFile() {
+            uploadedFile = null;
+            fileInput.value = '';
+            document.getElementById('file-uploaded-indicator').classList.add('hidden');
+            uploadArea.style.display = 'block';
+            document.getElementById('cv-text').value = '';
         }
 
         async function startAnalysis() {
@@ -234,7 +336,12 @@ Patents: 5 US patents in machine learning
             const country = document.getElementById('user-country').value.trim();
             const field = document.getElementById('user-field').value.trim();
 
-            if (!cvText || !email || !name) {
+            if (!cvText) {
+                showError('Please upload a file or paste your CV text');
+                return;
+            }
+
+            if (!email || !name) {
                 showError('Please fill in all required fields');
                 return;
             }
@@ -249,6 +356,8 @@ Patents: 5 US patents in machine learning
                 const endpoint = selectedCaseType === 'EB1A' 
                     ? '/.netlify/functions/analyze-eb1a'
                     : '/.netlify/functions/analyze-eb2niw';
+
+                console.log('Calling endpoint:', endpoint);
 
                 // Call Netlify Function
                 const response = await fetch(endpoint, {
@@ -267,11 +376,16 @@ Patents: 5 US patents in machine learning
                     })
                 });
 
+                console.log('Response status:', response.status);
+
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText);
+                    throw new Error(`Server error: ${response.status}. ${errorText}`);
                 }
 
                 const data = await response.json();
+                console.log('Response data:', data);
                 
                 if (!data.success) {
                     throw new Error(data.error || 'Analysis failed');
@@ -284,23 +398,20 @@ Patents: 5 US patents in machine learning
                 console.error('Error:', error);
                 document.getElementById('step-loading').classList.add('hidden');
                 document.getElementById('step-upload').classList.remove('hidden');
-                showError('Failed to analyze CV. Please try again. Error: ' + error.message);
+                showError('Failed to analyze CV. ' + error.message + '. Please check your API key in Netlify environment variables.');
             }
         }
 
         function displayResults(data) {
             const analysis = data.analysis;
             
-            // Hide loading, show results
             document.getElementById('step-loading').classList.add('hidden');
             document.getElementById('step-results').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Update score
             document.getElementById('result-case-type').textContent = data.caseType;
             document.getElementById('result-score').textContent = analysis.overallScore;
 
-            // Update likelihood badge
             const likelihood = analysis.likelihood.toLowerCase();
             const badge = document.getElementById('result-likelihood-badge');
             if (likelihood === 'high') {
@@ -311,13 +422,12 @@ Patents: 5 US patents in machine learning
                 badge.innerHTML = '❌ LOW LIKELIHOOD';
             }
 
-            // Display criteria
             const criteriaContainer = document.getElementById('criteria-container');
             criteriaContainer.innerHTML = '';
 
             const criteria = data.caseType === 'EB1A' 
                 ? analysis.criteriaScores 
-                : [...analysis.prongs, ...analysis.qualifications];
+                : [...(analysis.prongs || []), ...(analysis.qualifications || [])];
 
             criteria.forEach(item => {
                 const strengthClass = getStrengthClass(item.strength);
@@ -341,11 +451,10 @@ Patents: 5 US patents in machine learning
                 criteriaContainer.appendChild(div);
             });
 
-            // Display recommendations
             const recContainer = document.getElementById('recommendations-container');
             recContainer.innerHTML = '';
 
-            analysis.recommendations.forEach((rec, index) => {
+            (analysis.recommendations || []).forEach((rec, index) => {
                 const div = document.createElement('div');
                 div.style.cssText = 'background: #f8fafc; border-left: 4px solid #667eea; padding: 1.25rem; border-radius: 8px; margin-bottom: 1rem;';
                 div.innerHTML = `<div style="font-weight: 600; margin-bottom: 0.5rem;">${index + 1}. ${rec.split(':')[0] || rec.substring(0, 50)}</div>
@@ -355,7 +464,7 @@ Patents: 5 US patents in machine learning
         }
 
         function getEmoji(strength) {
-            const s = strength.toLowerCase();
+            const s = (strength || '').toLowerCase();
             if (s.includes('strong')) return '✅';
             if (s.includes('good')) return '✅';
             if (s.includes('weak')) return '⚠️';
@@ -364,7 +473,7 @@ Patents: 5 US patents in machine learning
         }
 
         function getStrengthClass(strength) {
-            const s = strength.toLowerCase();
+            const s = (strength || '').toLowerCase();
             if (s.includes('strong')) return 'tag-strong';
             if (s.includes('good')) return 'tag-good';
             if (s.includes('weak')) return 'tag-weak';
@@ -373,7 +482,7 @@ Patents: 5 US patents in machine learning
         }
 
         function getFillClass(strength) {
-            const s = strength.toLowerCase();
+            const s = (strength || '').toLowerCase();
             if (s.includes('strong')) return 'strong';
             if (s.includes('good')) return 'good';
             if (s.includes('weak')) return 'weak';
@@ -383,10 +492,10 @@ Patents: 5 US patents in machine learning
 
         function showError(message) {
             const container = document.getElementById('error-container');
-            container.innerHTML = `<div class="error-message">${message}</div>`;
+            container.innerHTML = `<div class="error-message">❌ ${message}</div>`;
             setTimeout(() => {
                 container.innerHTML = '';
-            }, 5000);
+            }, 8000);
         }
     </script>
 </body>

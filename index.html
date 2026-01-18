@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Immigration Case Assessment - Platon Law</title>
+    <style>
+        /* ... (весь предыдущий CSS остаётся тот же) ... */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1e293b; line-height: 1.6; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4rem 2rem; text-align: center; }
+        .hero h1 { font-size: 3rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.2; }
+        .hero p { font-size: 1.25rem; opacity: 0.95; max-width: 700px; margin: 0 auto 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .section { padding: 4rem 2rem; background: white; }
+        .section-alt { background: #f8fafc; }
+        .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 1rem; }
+        .section-subtitle { text-align: center; color: #64748b; font-size: 1.125rem; margin-bottom: 3rem; }
+        .case-types { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .case-card { background: white; border: 2px solid #e2e8f0; border-radius: 16px; padding: 2rem; cursor: pointer; transition: all 0.3s; }
+        .case-card:hover { border-color: #667eea; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2); }
+        .case-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .case-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .case-visa-type { color: #667eea; font-weight: 600; margin-bottom: 1rem; font-size: 0.875rem; }
+        .case-description { color: #64748b; font-size: 0.95rem; margin-bottom: 1rem; }
+        .select-button { background: #667eea; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; font-size: 1rem; transition: all 0.2s; }
+        .select-button:hover { background: #5568d3; }
+        .assessment-container { max-width: 800px; margin: 0 auto; background: white; border-radius: 16px; padding: 3rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+        .form-input { width: 100%; padding: 0.875rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; }
+        .form-input:focus { outline: none; border-color: #667eea; }
+        .form-textarea { min-height: 150px; resize: vertical; font-family: inherit; }
+        .button { background: #667eea; color: white; border: none; padding: 1rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1.125rem; width: 100%; transition: all 0.3s; }
+        .button:hover:not(:disabled) { background: #5568d3; transform: translateY(-2px); }
+        .button:disabled { background: #cbd5e1; cursor: not-allowed; }
+        .loading-screen { text-align: center; padding: 4rem 2rem; }
+        .spinner { width: 80px; height: 80px; border: 6px solid #e2e8f0; border-top-color: #667eea; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 2rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; }
+        .results-container { max-width: 900px; margin: 0 auto; }
+        .score-display { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3rem; border-radius: 16px; text-align: center; margin-bottom: 2rem; }
+        .score-number { font-size: 5rem; font-weight: 700; }
+        .results-section { background: white; border-radius: 16px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .criteria-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #e2e8f0; }
+        .criteria-name { font-weight: 600; flex: 1; }
+        .score-bar { width: 100px; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin: 0 1rem; }
+        .score-fill { height: 100%; transition: width 0.5s; }
+        .score-fill.strong { background: #10b981; }
+        .score-fill.good { background: #3b82f6; }
+        .score-fill.weak { background: #f59e0b; }
+        .score-fill.missing { background: #ef4444; }
+        .strength-tag { padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; font-weight: 600; min-width: 80px; text-align: center; }
+        .tag-strong { background: #d1fae5; color: #065f46; }
+        .tag-good { background: #dbeafe; color: #1e40af; }
+        .tag-weak { background: #fef3c7; color: #92400e; }
+        .tag-missing { background: #fee2e2; color: #991b1b; }
+        .hidden { display: none; }
+        .error-message { background: #fee2e2; border: 2px solid #ef4444; color: #991b1b; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <h1>🎯 Free AI Immigration Case Assessment</h1>
+            <p>Find out your chances for EB1A or EB2-NIW visa in 60 seconds using advanced AI</p>
+        </div>
+    </div>
+
+    <!-- Step 1: Case Type Selection -->
+    <div id="step-selection" class="section">
+        <div class="container">
+            <h2 class="section-title">Which visa are you interested in?</h2>
+            <p class="section-subtitle">Choose the immigration path that fits your profile</p>
+            
+            <div class="case-types">
+                <div class="case-card" onclick="selectCase('EB1A')">
+                    <div class="case-icon">🏆</div>
+                    <div class="case-title">EB1A</div>
+                    <div class="case-visa-type">GREEN CARD • Extraordinary Ability</div>
+                    <div class="case-description">
+                        For individuals with extraordinary ability in sciences, arts, education, business, or athletics.
+                    </div>
+                    <button class="select-button">Assess My Chances →</button>
+                </div>
+
+                <div class="case-card" onclick="selectCase('EB2NIW')">
+                    <div class="case-icon">🎓</div>
+                    <div class="case-title">EB2-NIW</div>
+                    <div class="case-visa-type">GREEN CARD • National Interest Waiver</div>
+                    <div class="case-description">
+                        For professionals whose work is in the national interest of the United States.
+                    </div>
+                    <button class="select-button">Assess My Chances →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Upload & Information -->
+    <div id="step-upload" class="section section-alt hidden">
+        <div class="container">
+            <div class="assessment-container">
+                <h2 style="text-align: center; margin-bottom: 2rem; font-size: 1.75rem;">
+                    <span id="selected-case-name">EB1A</span> Assessment
+                </h2>
+
+                <div class="form-group">
+                    <label class="form-label">Your CV/Resume Text *</label>
+                    <textarea 
+                        id="cv-text"
+                        class="form-input form-textarea" 
+                        placeholder="Paste your resume/CV here...
+
+Example:
+John Doe
+PhD Computer Science, MIT (2018)
+Senior Research Scientist, Google AI
+
+Publications:
+- 15 peer-reviewed papers
+- 250+ citations
+- h-index: 12
+
+Awards:
+- Best Paper Award, ACL 2023
+- Dean's Excellence Award, MIT 2022
+
+Patents: 5 US patents in machine learning
+..."
+                        required
+                    ></textarea>
+                </div>
+
+                <hr style="margin: 2rem 0; border: none; border-top: 1px solid #e2e8f0;">
+
+                <h3 style="margin-bottom: 1.5rem;">Your Contact Information:</h3>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" id="user-email" class="form-input" placeholder="your.email@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" id="user-name" class="form-input" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Current Country *</label>
+                    <input type="text" id="user-country" class="form-input" placeholder="United States" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Field of Work *</label>
+                    <input type="text" id="user-field" class="form-input" placeholder="Software Engineering" required>
+                </div>
+
+                <div id="error-container"></div>
+
+                <button class="button" id="analyze-button" onclick="startAnalysis()">
+                    🚀 Analyze My Chances
+                </button>
+
+                <div style="text-align: center; margin-top: 1.5rem; color: #64748b; font-size: 0.875rem;">
+                    🔒 Your data is encrypted and confidential
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Loading -->
+    <div id="step-loading" class="section hidden">
+        <div class="container">
+            <div class="loading-screen">
+                <div class="spinner"></div>
+                <div class="loading-text">🤖 AI is analyzing your qualifications...</div>
+                <p style="margin-top: 2rem; color: #64748b;">This usually takes 10-30 seconds</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 4: Results -->
+    <div id="step-results" class="section section-alt hidden">
+        <div class="container">
+            <div class="results-container">
+                <div class="score-display">
+                    <div style="font-size: 1.125rem; opacity: 0.9; margin-bottom: 1rem;">
+                        Your <span id="result-case-type">EB1A</span> Eligibility Score
+                    </div>
+                    <div class="score-number">
+                        <span id="result-score">78</span><span style="font-size: 3rem;">/100</span>
+                    </div>
+                    <div id="result-likelihood-badge" style="margin-top: 1rem; font-size: 1.25rem;">
+                        ✅ HIGH LIKELIHOOD
+                    </div>
+                </div>
+
+                <div class="results-section">
+                    <h3 style="margin-bottom: 1.5rem;">📊 Criteria Breakdown</h3>
+                    <div id="criteria-container"></div>
+                </div>
+
+                <div class="results-section">
+                    <h3 style="margin-bottom: 1.5rem;">💡 Personalized Recommendations</h3>
+                    <div id="recommendations-container"></div>
+                </div>
+
+                <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 8px; margin-top: 2rem; font-size: 0.875rem; color: #78350f;">
+                    <strong>⚠️ Disclaimer:</strong> This AI assessment is for informational purposes only and does not constitute legal advice. 
+                    For legal advice specific to your situation, consult a licensed immigration attorney.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedCaseType = '';
+        let analysisResult = null;
+
+        function selectCase(caseType) {
+            selectedCaseType = caseType;
+            document.getElementById('selected-case-name').textContent = caseType;
+            document.getElementById('step-selection').classList.add('hidden');
+            document.getElementById('step-upload').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function startAnalysis() {
+            // Validate inputs
+            const cvText = document.getElementById('cv-text').value.trim();
+            const email = document.getElementById('user-email').value.trim();
+            const name = document.getElementById('user-name').value.trim();
+            const country = document.getElementById('user-country').value.trim();
+            const field = document.getElementById('user-field').value.trim();
+
+            if (!cvText || !email || !name) {
+                showError('Please fill in all required fields');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('step-upload').classList.add('hidden');
+            document.getElementById('step-loading').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            try {
+                // Determine endpoint
+                const endpoint = selectedCaseType === 'EB1A' 
+                    ? '/.netlify/functions/analyze-eb1a'
+                    : '/.netlify/functions/analyze-eb2niw';
+
+                // Call Netlify Function
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        cvText: cvText,
+                        userInfo: {
+                            email: email,
+                            name: name,
+                            country: country,
+                            field: field
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error || 'Analysis failed');
+                }
+
+                analysisResult = data;
+                displayResults(data);
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('step-loading').classList.add('hidden');
+                document.getElementById('step-upload').classList.remove('hidden');
+                showError('Failed to analyze CV. Please try again. Error: ' + error.message);
+            }
+        }
+
+        function displayResults(data) {
+            const analysis = data.analysis;
+            
+            // Hide loading, show results
+            document.getElementById('step-loading').classList.add('hidden');
+            document.getElementById('step-results').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update score
+            document.getElementById('result-case-type').textContent = data.caseType;
+            document.getElementById('result-score').textContent = analysis.overallScore;
+
+            // Update likelihood badge
+            const likelihood = analysis.likelihood.toLowerCase();
+            const badge = document.getElementById('result-likelihood-badge');
+            if (likelihood === 'high') {
+                badge.innerHTML = '✅ HIGH LIKELIHOOD';
+            } else if (likelihood === 'medium') {
+                badge.innerHTML = '⚠️ MEDIUM LIKELIHOOD';
+            } else {
+                badge.innerHTML = '❌ LOW LIKELIHOOD';
+            }
+
+            // Display criteria
+            const criteriaContainer = document.getElementById('criteria-container');
+            criteriaContainer.innerHTML = '';
+
+            const criteria = data.caseType === 'EB1A' 
+                ? analysis.criteriaScores 
+                : [...analysis.prongs, ...analysis.qualifications];
+
+            criteria.forEach(item => {
+                const strengthClass = getStrengthClass(item.strength);
+                const fillClass = getFillClass(item.strength);
+                
+                const div = document.createElement('div');
+                div.className = 'criteria-item';
+                div.innerHTML = `
+                    <div style="flex: 1;">
+                        <div class="criteria-name">${getEmoji(item.strength)} ${item.name || item.criterion}</div>
+                        <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.25rem;">
+                            ${item.evidence || item.details}
+                        </div>
+                    </div>
+                    <div class="score-bar">
+                        <div class="score-fill ${fillClass}" style="width: ${item.score}%;"></div>
+                    </div>
+                    <span style="font-weight: 700; width: 40px;">${item.score}</span>
+                    <span class="strength-tag ${strengthClass}">${item.strength}</span>
+                `;
+                criteriaContainer.appendChild(div);
+            });
+
+            // Display recommendations
+            const recContainer = document.getElementById('recommendations-container');
+            recContainer.innerHTML = '';
+
+            analysis.recommendations.forEach((rec, index) => {
+                const div = document.createElement('div');
+                div.style.cssText = 'background: #f8fafc; border-left: 4px solid #667eea; padding: 1.25rem; border-radius: 8px; margin-bottom: 1rem;';
+                div.innerHTML = `<div style="font-weight: 600; margin-bottom: 0.5rem;">${index + 1}. ${rec.split(':')[0] || rec.substring(0, 50)}</div>
+                    <div style="color: #64748b;">${rec}</div>`;
+                recContainer.appendChild(div);
+            });
+        }
+
+        function getEmoji(strength) {
+            const s = strength.toLowerCase();
+            if (s.includes('strong')) return '✅';
+            if (s.includes('good')) return '✅';
+            if (s.includes('weak')) return '⚠️';
+            if (s.includes('missing')) return '❌';
+            return '•';
+        }
+
+        function getStrengthClass(strength) {
+            const s = strength.toLowerCase();
+            if (s.includes('strong')) return 'tag-strong';
+            if (s.includes('good')) return 'tag-good';
+            if (s.includes('weak')) return 'tag-weak';
+            if (s.includes('missing')) return 'tag-missing';
+            return 'tag-good';
+        }
+
+        function getFillClass(strength) {
+            const s = strength.toLowerCase();
+            if (s.includes('strong')) return 'strong';
+            if (s.includes('good')) return 'good';
+            if (s.includes('weak')) return 'weak';
+            if (s.includes('missing')) return 'missing';
+            return 'good';
+        }
+
+        function showError(message) {
+            const container = document.getElementById('error-container');
+            container.innerHTML = `<div class="error-message">${message}</div>`;
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "eb1a-assessment-tool",
+  "version": "1.0.0",
+  "description": "Free EB1A/EB2-NIW Assessment Tool with Netlify Functions + Gemini AI",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step needed for static site'"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

@@ -1,9 +1,7 @@
 // netlify/functions/analyze-eb1a.js
-// Netlify Serverless Function для анализа EB1A кейсов
+// FIXED VERSION with better error handling
 
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 exports.handler = async (event, context) => {
   // CORS headers
@@ -29,8 +27,32 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    // Check API key
+    if (!process.env.GEMINI_API_KEY) {
+      console.error('GEMINI_API_KEY not found in environment');
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ 
+          success: false,
+          error: 'API key not configured. Please add GEMINI_API_KEY to Netlify environment variables.' 
+        })
+      };
+    }
+
     // Parse request body
-    const { cvText, userInfo } = JSON.parse(event.body);
+    let requestData;
+    try {
+      requestData = JSON.parse(event.body);
+    } catch (e) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'Invalid JSON in request body' })
+      };
+    }
+
+    const { cvText, userInfo } = requestData;
     
     if (!cvText || !userInfo?.email) {
       return {
@@ -42,7 +64,8 @@ exports.handler = async (event, context) => {
 
     console.log(`Analyzing EB1A for: ${userInfo.email}`);
 
-    // Call Gemini AI
+    // Initialize Gemini AI
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
     
     const prompt = `
@@ -129,11 +152,19 @@ IMPORTANT RULES:
 - Likelihood: "High" (70+), "Medium" (50-69), "Low" (<50)
 - Be realistic and conservative - don't overestimate
 - Only score based on actual evidence found in CV
-- Return ONLY valid JSON, no other text
+- Return ONLY valid JSON, no other text, no markdown, no backticks
 `;
 
-    const result = await model.generateContent(prompt);
+    // Call Gemini with timeout
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('API timeout after 25 seconds')), 25000)
+    );
+
+    const resultPromise = model.generateContent(prompt);
+    const result = await Promise.race([resultPromise, timeoutPromise]);
+    
     const responseText = result.response.text();
+    console.log('Raw Gemini response:', responseText.substring(0, 200));
     
     // Clean the response (remove markdown if present)
     let cleanedResponse = responseText.trim();
@@ -144,7 +175,21 @@ IMPORTANT RULES:
       cleanedResponse = cleanedResponse.replace(/```\n?/g, '');
     }
     
-    const analysis = JSON.parse(cleanedResponse);
+    let analysis;
+    try {
+      analysis = JSON.parse(cleanedResponse);
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError);
+      console.error('Cleaned response:', cleanedResponse);
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ 
+          success: false,
+          error: 'Failed to parse AI response. Please try again.' 
+        })
+      };
+    }
     
     // Add metadata
     const response = {
@@ -162,12 +207,6 @@ IMPORTANT RULES:
 
     console.log(`Analysis complete. Score: ${analysis.overallScore}`);
 
-    // TODO: Save to Supabase (optional)
-    // await saveAssessment(response);
-
-    // TODO: Send email with PDF report (optional)
-    // await sendEmailReport(userInfo.email, analysis);
-
     return {
       statusCode: 200,
       headers,
@@ -177,12 +216,23 @@ IMPORTANT RULES:
   } catch (error) {
     console.error('Error analyzing CV:', error);
     
+    // Better error messages
+    let errorMessage = 'Failed to analyze CV';
+    if (error.message.includes('API key')) {
+      errorMessage = 'Invalid or missing API key';
+    } else if (error.message.includes('timeout')) {
+      errorMessage = 'Request timeout - please try again';
+    } else if (error.message.includes('quota')) {
+      errorMessage = 'API quota exceeded - please try again later';
+    }
+    
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
-        error: 'Failed to analyze CV',
-        message: error.message 
+        success: false,
+        error: errorMessage,
+        details: error.message 
       })
     };
   }

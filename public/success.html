@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Thank you • Спасибо</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.6; padding: 40px; }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 { margin: 0 0 10px 0; }
+    p { margin: 0 0 16px 0; }
+    a { color: #3366ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 id="h1">Thank you!</h1>
+    <p id="p">Your message has been sent. I will reply within 24 hours.</p>
+    <p><a id="a" href="/">Back to home</a></p>
+  </div>
+
+  <script>
+    // Определяем язык: сначала берем сохранённый на сайте, потом язык браузера
+    const saved = localStorage.getItem('lang');
+    const browser = (navigator.language || '').startsWith('ru') ? 'ru' : 'en';
+    const lang = saved || browser;
+
+    if (lang === 'ru') {
+      document.documentElement.lang = 'ru';
+      document.getElementById('h1').textContent = 'Спасибо!';
+      document.getElementById('p').textContent = 'Ваше сообщение отправлено. Отвечу в течение 24 часов.';
+      document.getElementById('a').textContent = 'Вернуться на главную';
+    }
+  </script>
+</body>
+</html>

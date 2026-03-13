@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>platon.law - Projects Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Notice Bar */
+        .notice-bar {
+            background: #FFD700;
+            color: #333;
+            text-align: center;
+            padding: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 54px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .logo .law {
+            color: #FFD700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+        
+        .nav-links .active {
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 80px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Main Content */
+        .main-content {
+            background: white;
+            margin: 40px 0;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .section {
+            padding: 60px 40px;
+        }
+        
+        .section:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .section p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 3rem;
+        }
+        
+        .project-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .project-card .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+        
+        .project-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .project-card p {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+        
+        .ai-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(238, 90, 36, 0.3);
+        }
+        
+        .ai-btn:hover {
+            background: linear-gradient(135deg, #ee5a24, #d63031);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(238, 90, 36, 0.4);
+        }
+        
+        .ai-btn.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        .ai-btn-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dev-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ffc107;
+            color: #333;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: bold;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .lang-switcher {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            z-index: 1001;
+        }
+        
+        .lang-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 12px;
+            margin: 0 2px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .lang-btn.active {
+            background: #FFD700;
+            color: #333;
+            border-color: #FFD700;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        /* Demo Navigation */
+        .demo-nav {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 1002;
+        }
+        
+        .demo-nav h4 {
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+        
+        .demo-nav button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+        
+        .demo-nav button:hover {
+            background: #5a6fd8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notice-bar">
+        Specialized Legal Research & Expert Services for Immigration Law Firms
+    </div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">platon<span class="law">.law</span></div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#projects" class="active">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-setlang="ru">RU</button>
+        <button class="lang-btn" data-setlang="en">EN</button>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Projects</h1>
+            <p class="subtitle">Legal initiatives powered by cutting-edge AI</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="main-content">
+            <section class="section">
+                <h2 data-i18n="h1">Проекты</h2>
+                <p data-i18n="intro">
+                    Здесь собраны мои инициативы в сфере права — от иммиграции до правозащиты и юридического сообщества. Каждый раздел использует лучшие ИИ-модели для подготовки документов, поиска прецедентов и формирования аргументов с точными ссылками.
+                </p>
+                
+                <div class="projects-grid">
+                    <!-- Immigration Project -->
+                    <article class="project-card">
+                        <span class="badge">EB-1A • EB-2 NIW</span>
+                        <div class="icon">🇺🇸</div>
+                        <h3 data-i18n="c1_title">Иммиграционная практика</h3>
+                        <p data-i18n="c1_desc">
+                            Основной фокус: иммиграция в США, визы талантов, гринкарты под ключ. ИИ помогает составлять петиции, заполнять формы и отвечать на RFE с проверенными цитатами.
+                        </p>
+                        <div class="actions">
+                            <a class="btn" href="/projects/immigration" data-i18n="learn_more">Узнать больше</a>
+                            <div class="ai-btn-wrapper">
+                                <a class="btn ai-btn disabled" href="#" data-i18n="launch_ai">Запустить ИИ</a>
+                                <span class="dev-badge" data-i18n="in_development">В разработке</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Synergy Project -->
+                    <article class="project-card">
+                        <span class="badge" data-i18n="c2_badge">Сообщество</span>
+                        <div class="icon">🤝</div>
+                        <h3 data-i18n="c2_title">Synergy Law Club</h3>
+                        <p data-i18n="c2_desc">
+                            Сообщество из 1000+ юристов и адвокатов; обмен опытом, совместные проекты. ИИ дает точные ответы по российскому праву с проверкой судебной практики.
+                        </p>
+                        <div class="actions">
+                            <a class="btn" href="/projects/synergy" data-i18n="details">Подробнее</a>
+                            <div class="ai-btn-wrapper">
+                                <a class="btn ai-btn disabled" href="#" data-i18n="launch_ai">Запустить ИИ</a>
+                                <span class="dev-badge" data-i18n="in_development">В разработке</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Indigenous Rights Project -->
+                    <article class="project-card">
+                        <span class="badge" data-i18n="c3_badge">ADRIP • UNDRIP</span>
+                        <div class="icon">⚖️</div>
+                        <h3 data-i18n="c3_title">База знаний по правам коренных народов</h3>
+                        <p data-i18n="c3_desc">
+                            Архив деклараций и прецедентов (без агитации): ADRIP/UNDRIP, анализ. ИИ консультирует по защите прав с точными ссылками на документы и помогает составлять жалобы.
+                        </p>
+                        <div class="actions">
+                            <a class="btn" href="/projects/indigenous" data-i18n="open_library">Открыть библиотеку</a>
+                            <div class="ai-btn-wrapper">
+                                <a class="btn ai-btn disabled" href="#" data-i18n="launch_ai">Запустить ИИ</a>
+                                <span class="dev-badge" data-i18n="in_development">В разработке</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Platon Shamaev. All rights reserved.</p>
+            <p>Legal Research Services | Expert Witness | Case Development Support</p>
+        </div>
+    </footer>
+
+    <!-- Demo Navigation Panel -->
+    <div class="demo-nav">
+        <h4>DEMO панель</h4>
+        <button onclick="showOriginal()">Оригинальный сайт</button>
+        <button onclick="showProjects()">+ Projects секция</button>
+        <button onclick="showIntegration()">Полная интеграция</button>
+    </div>
+
+    <script>
+        // Simple i18n system
+        const i18n = {
+            ru: {
+                h1: 'Проекты',
+                intro: 'Здесь собраны мои инициативы в сфере права — от иммиграции до правозащиты и юридического сообщества. Каждый раздел использует лучшие ИИ-модели для подготовки документов, поиска прецедентов и формирования аргументов с точными ссылками.',
+                c1_title: 'Иммиграционная практика',
+                c1_desc: 'Основной фокус: иммиграция в США, визы талантов, гринкарты под ключ. ИИ помогает составлять петиции, заполнять формы и отвечать на RFE с проверенными цитатами.',
+                c2_badge: 'Сообщество',
+                c2_title: 'Synergy Law Club',
+                c2_desc: 'Сообщество из 1000+ юристов и адвокатов; обмен опытом, совместные проекты. ИИ дает точные ответы по российскому праву с проверкой судебной практики.',
+                c3_badge: 'ADRIP • UNDRIP',
+                c3_title: 'База знаний по правам коренных народов',
+                c3_desc: 'Архив деклараций и прецедентов (без агитации): ADRIP/UNDRIP, анализ. ИИ консультирует по защите прав с точными ссылками на документы и помогает составлять жалобы.',
+                learn_more: 'Узнать больше',
+                details: 'Подробнее',
+                open_library: 'Открыть библиотеку',
+                launch_ai: 'Запустить ИИ',
+                in_development: 'В разработке'
+            },
+            en: {
+                h1: 'Projects',
+                intro: 'My initiatives in law — from US immigration to indigenous rights and a legal community. Each project leverages cutting-edge AI models for document preparation, precedent research, and precise legal argumentation.',
+                c1_title: 'Immigration Practice',
+                c1_desc: 'Primary focus: U.S. immigration, talent visas, end‑to‑end green cards. AI assists with petition drafting, form completion, and RFE responses with verified citations.',
+                c2_badge: 'Community',
+                c2_title: 'Synergy Law Club',
+                c2_desc: 'A community of 1000+ lawyers and attorneys; knowledge‑sharing, joint projects. AI provides precise Russian law Q&A with verified court precedents.',
+                c3_badge: 'ADRIP • UNDRIP',
+                c3_title: 'Indigenous Rights Knowledge Base',
+                c3_desc: 'A non‑advocacy archive of declarations and case law: ADRIP/UNDRIP analysis. AI provides rights protection guidance with precise document references and assists with complaint drafting.',
+                learn_more: 'Learn more',
+                details: 'Details',
+                open_library: 'Open library',
+                launch_ai: 'Launch AI',
+                in_development: 'In Development'
+            }
+        };
+
+        function applyLang(lang) {
+            const dict = i18n[lang] || i18n.ru;
+            document.documentElement.lang = lang;
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) {
+                    el.textContent = dict[key];
+                }
+            });
+            
+            document.querySelectorAll('[data-setlang]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.setlang === lang);
+            });
+        }
+
+        // Language switcher
+        document.querySelectorAll('[data-setlang]').forEach(btn => {
+            btn.addEventListener('click', () => applyLang(btn.dataset.setlang));
+        });
+
+        // Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Demo functions
+        function showOriginal() {
+            alert('Это покажет ваш текущий сайт без изменений');
+        }
+
+        function showProjects() {
+            alert('Текущий вид - добавлена секция Projects с ИИ-кнопками');
+        }
+
+        function showIntegration() {
+            alert('Полная интеграция: Projects в главном меню + отдельные страницы для каждого проекта');
+        }
+
+        // Initialize
+        applyLang('ru');
+    </script>
+</body>
+</html>

@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n-attr="content:meta_title">Platon.law - Legal Research & Expert Services for Immigration Attorneys</title>
     <meta name="description" data-i18n-attr="content:meta_desc" content="Specialized legal research and expert services for immigration attorneys and law firms">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://platon.law">
+    <meta property="og:title" content="Platon Shamaev — Legal Research & Expert Services for Immigration Attorneys">
+    <meta property="og:description" content="EB-1A/EB-2 NIW case development, asylum expert reports, Russian legal research. Columbia HRAP graduate. EB2NIW approved.">
+    <meta property="og:image" content="https://platon.law/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Platon Shamaev — Legal Research & Expert Services">
+    <meta name="twitter:description" content="EB-1A/EB-2 NIW case development, asylum expert reports, Russian legal research.">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
     <style>
         * {
             margin: 0;
@@ -394,6 +405,27 @@
             opacity: 0.9;
         }
         
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -418,8 +450,24 @@
                 left: 0;
             }
             
+            .hamburger {
+                display: flex;
+            }
+            
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(50, 40, 100, 0.97);
+                flex-direction: column;
+                padding: 20px;
+                gap: 1rem;
+            }
+            
+            .nav-links.open {
+                display: flex;
             }
             
             header {
@@ -445,7 +493,10 @@
     <header>
         <nav class="container">
             <div class="logo">platon<span class="law">.law</span></div>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#about" data-i18n="nav_about">About</a></li>
                 <li><a href="#services" data-i18n="nav_services">Services</a></li>
                 <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
@@ -464,6 +515,13 @@
                 Specialized legal research and expert services for immigration attorneys and law firms
             </p>
             <a href="#contact" class="cta-button" data-i18n="hero_cta">Discuss Your Firm's Needs</a>
+            <a href="https://www.linkedin.com/in/platon-shamaev-357a2768/"
+               target="_blank"
+               rel="noopener"
+               class="cta-button"
+               style="background: #0077B5; color: white; margin-left: 12px;">
+               LinkedIn →
+            </a>
         </div>
     </section>
 
@@ -479,6 +537,12 @@
                 </p>
                 <p data-i18n="about_p3">
                     My services operate under attorney supervision, ensuring full compliance while delivering specialized expertise in Russian legal systems, indigenous rights, and international human rights law.
+                </p>
+                <p data-i18n="about_cb">
+                    Beyond direct services, I build CaseBuilder — an AI-assisted immigration document preparation platform for EB-1A, EB-2 NIW, O-1A, and RFE response workflows. It helps applicants organize evidence, map records to immigration criteria, flag weak spots, and generate draft materials for review and self-preparation. CaseBuilder is document preparation software, not a law firm; it does not provide legal advice or file with USCIS.
+                </p>
+                <p data-i18n="about_eq">
+                    I also serve as President of Equitas Global Foundation Inc., a New York registered nonprofit building toward DOJ/EOIR recognition and BIA accreditation. Equitas focuses on immigration legal access, human rights advocacy, and educational initiatives supporting researchers, refugees, and vulnerable communities. It does not yet provide authorized immigration legal representation.
                 </p>
                 <div style="background:#fff8e1;border-left:4px solid #FFD700;padding:16px 20px;border-radius:6px;margin-top:24px;text-align:left;max-width:800px;margin-left:auto;margin-right:auto;">
                     <strong data-i18n="disclaimer_title">Professional Notice:</strong>
@@ -512,12 +576,25 @@
                     <div class="service-card">
                         <div class="icon">🤝</div>
                         <h3 data-i18n="service5_title">Attorney Network & Referrals</h3>
-                        <p data-i18n="service5_desc">Access to international network of 2,500+ legal professionals through Synergy Law Club for complex cross-border cases.</p>
+                        <p data-i18n="service5_desc">Access to international network of 2,000+ legal professionals through Synergy Law Club for complex cross-border cases.</p>
                     </div>
                     <div class="service-card">
                         <div class="icon">💼</div>
                         <h3 data-i18n="service6_title">Case Consulting & Strategy</h3>
                         <p data-i18n="service6_desc">Strategic consultation on complex cases, evidence development, and litigation support for immigration proceedings.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon">✍️</div>
+                        <h3 data-i18n="service9_title">Expert Opinion Letters</h3>
+                        <p data-i18n="service9_desc">Independent expert opinion letters in support of EB-1A, EB-2 NIW, and O-1 petitions. We coordinate qualified, independent subject-matter experts (PhD/MD level across 30+ fields), managing intake, expert matching, and delivery so your petition is supported by a credible, field-relevant letter.</p>
+                        <p data-i18n="service9_disclaimer" style="font-size: 0.8rem; color: #888; margin-top: 0.75rem;">Letters are authored and signed by independent third-party experts. We facilitate the engagement and do not author the letters. Not legal advice; no attorney-client relationship created.</p>
+                        <a href="#contact" style="display:inline-block; margin-top: 1rem; font-weight: 500; color: #667eea; text-decoration: underline;" data-i18n="service9_cta">Request Expert Letters →</a>
+                    </div>
+                    <div class="service-card">
+                        <div class="icon">🌐</div>
+                        <h3 data-i18n="service8_title">Business Web Presence</h3>
+                        <p data-i18n="service8_desc">Professional one-page website with custom design, corporate email, and contact form. Delivered in 48 hours. Ideal for EB-2 NIW applicants and international entrepreneurs establishing US business presence.</p>
+                        <p style="margin-top: 1rem; font-weight: bold; color: #667eea;">$400 flat fee · Domain ~$11/yr · Hosting free</p>
                     </div>
                     <div class="service-card partner-card">
                         <div class="partner-badge" data-i18n="partner_badge">Trusted Partner</div>
@@ -542,7 +619,7 @@
                 
                 <div class="network-stats">
                     <div class="stat-card">
-                        <div class="stat-number">2,500+</div>
+                        <div class="stat-number">2,000+</div>
                         <div data-i18n="stat1_label">Legal Professionals</div>
                     </div>
                     <div class="stat-card">
@@ -598,6 +675,12 @@
                     </div>
                 </div>
             </section>
+
+            <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 50px 40px; text-align: center;">
+                <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem;" data-i18n="mid_cta_title">Ready to Support Your Cases?</h2>
+                <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;" data-i18n="mid_cta_desc">Specialized expertise in Russian legal systems, EB-1A/EB-2 NIW case development, and asylum reports — delivered under attorney supervision.</p>
+                <a href="#contact" class="cta-button" data-i18n="mid_cta_btn">Get Expert Analysis</a>
+            </div>
 
             <section id="contact" class="section">
                 <h2 data-i18n="contact_title">Contact for Legal Services</h2>
@@ -668,6 +751,14 @@
         <div class="container">
             <p>&copy; <span id="year"></span> Platon Shamaev. <span data-i18n="footer_rights">All rights reserved.</span></p>
             <p data-i18n="footer_services">Legal Research Services | Expert Witness | Case Development Support</p>
+            <p style="margin-top: 12px;">
+                <a href="https://www.linkedin.com/in/platon-shamaev-357a2768/"
+                   target="_blank"
+                   rel="noopener"
+                   style="color: #FFD700; text-decoration: none; font-size: 0.95rem;">
+                   🔗 LinkedIn Profile
+                </a>
+            </p>
             <p style="margin-top: 10px; font-size: 0.9rem;">
                 <strong data-i18n="footer_disclaimer_title">Professional Disclaimer:</strong> <span data-i18n="footer_disclaimer">All services provided under attorney supervision. No attorney-client relationship established without formal engagement with supervising counsel.</span>
             </p>
@@ -695,6 +786,8 @@
                 about_p1: 'I provide specialized legal research and expert services to immigration attorneys and law firms, leveraging extensive experience in both Russian and American legal systems.',
                 about_p2: 'With a background spanning from prosecutor investigator in Yakutia to successful attorney practice in Moscow, plus firsthand experience navigating the EB2NIW process, I offer unique insights for complex immigration cases.',
                 about_p3: 'My services operate under attorney supervision, ensuring full compliance while delivering specialized expertise in Russian legal systems, indigenous rights, and international human rights law.',
+                about_cb: 'Beyond direct services, I build CaseBuilder — an AI-assisted immigration document preparation platform for EB-1A, EB-2 NIW, O-1A, and RFE response workflows. It helps applicants organize evidence, map records to immigration criteria, flag weak spots, and generate draft materials for review and self-preparation. CaseBuilder is document preparation software, not a law firm; it does not provide legal advice or file with USCIS.',
+                about_eq: 'I also serve as President of Equitas Global Foundation Inc., a New York registered nonprofit building toward DOJ/EOIR recognition and BIA accreditation. Equitas focuses on immigration legal access, human rights advocacy, and educational initiatives supporting researchers, refugees, and vulnerable communities. It does not yet provide authorized immigration legal representation.',
                 services_title: 'Services for Law Firms',
                 service1_title: 'EB1A/EB2NIW Case Development',
                 service1_desc: 'Comprehensive petition development, evidence compilation, and case strategy for extraordinary ability and national interest waiver cases.',
@@ -705,10 +798,16 @@
                 service4_title: 'Indigenous Rights Expertise',
                 service4_desc: 'Specialized knowledge in indigenous peoples\' rights, UN systems, and cultural persecution cases involving minority communities.',
                 service5_title: 'Attorney Network & Referrals',
-                service5_desc: 'Access to international network of 2,500+ legal professionals through Synergy Law Club for complex cross-border cases.',
+                service5_desc: 'Access to international network of 2,000+ legal professionals through Synergy Law Club for complex cross-border cases.',
                 service6_title: 'Case Consulting & Strategy',
                 service6_desc: 'Strategic consultation on complex cases, evidence development, and litigation support for immigration proceedings.',
+                service9_title: 'Expert Opinion Letters',
+                service9_desc: 'Independent expert opinion letters in support of EB-1A, EB-2 NIW, and O-1 petitions. We coordinate qualified, independent subject-matter experts (PhD/MD level across 30+ fields), managing intake, expert matching, and delivery so your petition is supported by a credible, field-relevant letter.',
+                service9_disclaimer: 'Letters are authored and signed by independent third-party experts. We facilitate the engagement and do not author the letters. Not legal advice; no attorney-client relationship created.',
+                service9_cta: 'Request Expert Letters →',
                 partner_badge: 'Trusted Partner',
+                service8_title: 'Business Web Presence',
+                service8_desc: 'Professional one-page website with custom design, corporate email, and contact form. Delivered in 48 hours. Ideal for EB-2 NIW applicants and international entrepreneurs establishing US business presence.',
                 service7_title: 'US Business Services',
                 service7_desc: 'Partnership with doola for LLC formation, bookkeeping, taxes, and analytics. Popular among international entrepreneurs and professionals. Get 10% off with DOOLAPLATON10.',
                 expertise_title: 'Professional Network',
@@ -754,6 +853,9 @@
                 footer_disclaimer: 'All services provided under attorney supervision. No attorney-client relationship established without formal engagement with supervising counsel.',
                 disclaimer_title: 'Professional Notice:',
                 disclaimer_text: ' Platon Shamaev is not a licensed U.S. attorney. All services are provided as legal research and document preparation support under the supervision of a licensed U.S. immigration attorney. No attorney-client relationship is established directly with Platon Law LLC.',
+                mid_cta_title: 'Ready to Support Your Cases?',
+                mid_cta_desc: 'Specialized expertise in Russian legal systems, EB-1A/EB-2 NIW case development, and asylum reports — delivered under attorney supervision.',
+                mid_cta_btn: 'Get Expert Analysis',
                 doola_title: 'Need US Business Services?',
                 doola_desc: 'Complete business solution: LLC formation, bookkeeping, taxes, and analytics. Perfect for international entrepreneurs and professionals expanding to the US market.',
                 doola_cta: 'Launch Your US Business - 10% Off',
@@ -777,6 +879,8 @@
                 about_p1: 'Я предоставляю специализированные юридические исследования и экспертные услуги иммиграционным адвокатам и юридическим фирмам, используя обширный опыт работы в российской и американской правовых системах.',
                 about_p2: 'Имея опыт работы от следователя прокуратуры в Якутии до успешной адвокатской практики в Москве, а также личный опыт прохождения процесса EB2NIW, я предлагаю уникальные решения для сложных иммиграционных дел.',
                 about_p3: 'Мои услуги оказываются под надзором адвоката, что обеспечивает полное соответствие требованиям при предоставлении специализированной экспертизы в области российских правовых систем, прав коренных народов и международного права прав человека.',
+                about_cb: 'Помимо прямых услуг, я развиваю CaseBuilder — AI-платформу подготовки иммиграционных документов по направлениям EB-1A, EB-2 NIW, O-1A и ответов на RFE. Она помогает заявителям организовать доказательства, сопоставить материалы с иммиграционными критериями, выявить слабые места и сформировать черновики материалов для проверки и самостоятельной подготовки. CaseBuilder — программное обеспечение для подготовки документов, не юридическая фирма; не предоставляет юридических консультаций и не подаёт документы в USCIS.',
+                about_eq: 'Я также являюсь президентом Equitas Global Foundation Inc., некоммерческой организации, зарегистрированной в штате Нью-Йорк, которая движется к получению признания DOJ/EOIR и аккредитации BIA. Equitas занимается доступом к иммиграционной правовой помощи, защитой прав человека и образовательными инициативами в поддержку исследователей, беженцев и уязвимых сообществ. Организация пока не предоставляет авторизованного иммиграционного юридического представительства.',
                 services_title: 'Услуги для юридических фирм',
                 service1_title: 'Разработка дел EB1A/EB2NIW',
                 service1_desc: 'Комплексная разработка петиций, сбор доказательств и стратегия дела для случаев выдающихся способностей и национального интереса.',
@@ -787,10 +891,16 @@
                 service4_title: 'Экспертиза по правам коренных народов',
                 service4_desc: 'Специализированные знания в области прав коренных народов, систем ООН и дел о культурных преследованиях меньшинств.',
                 service5_title: 'Сеть адвокатов и направления',
-                service5_desc: 'Доступ к международной сети из 2500+ юридических специалистов через Synergy Law Club для сложных трансграничных дел.',
+                service5_desc: 'Доступ к международной сети из 2000+ юридических специалистов через Synergy Law Club для сложных трансграничных дел.',
                 service6_title: 'Консультации по делам и стратегия',
                 service6_desc: 'Стратегические консультации по сложным делам, разработка доказательств и поддержка в иммиграционных разбирательствах.',
+                service9_title: 'Экспертные заключения для кейсов талантов',
+                service9_desc: 'Независимые экспертные заключения (expert opinion letters) в поддержку петиций EB-1A, EB-2 NIW и O-1. Мы координируем квалифицированных независимых экспертов (уровень PhD/MD по 30+ дисциплинам), берём на себя приём заявки, подбор эксперта и доставку, чтобы петицию поддерживало авторитетное профильное заключение.',
+                service9_disclaimer: 'Заключения готовятся и подписываются независимыми сторонними экспертами. Мы организуем взаимодействие, но не являемся авторами писем. Не является юридической консультацией; отношения адвокат-клиент не возникают.',
+                service9_cta: 'Запросить экспертные письма →',
                 partner_badge: 'Надежный партнер',
+                service8_title: 'Бизнес-сайт под ключ',
+                service8_desc: 'Профессиональный одностраничный сайт с индивидуальным дизайном, корпоративной почтой и контактной формой. Готово за 48 часов. Идеально для заявителей EB-2 NIW и международных предпринимателей, выходящих на рынок США.',
                 service7_title: 'Бизнес-услуги США',
                 service7_desc: 'Партнерство с doola для регистрации LLC, ведения бухгалтерии, налогов и аналитики. Популярно среди международных предпринимателей и специалистов. Скидка 10% по коду DOOLAPLATON10.',
                 expertise_title: 'Профессиональная сеть',
@@ -836,6 +946,9 @@
                 footer_disclaimer: 'Все услуги предоставляются под надзором адвоката. Отношения адвокат-клиент не устанавливаются без формального соглашения с курирующим адвокатом.',
                 disclaimer_title: 'Профессиональное уведомление:',
                 disclaimer_text: ' Платон Шамаев не является лицензированным адвокатом США. Все услуги предоставляются в виде юридических исследований и подготовки документов под надзором лицензированного иммиграционного адвоката США. Отношения адвокат-клиент непосредственно с Platon Law LLC не устанавливаются.',
+                mid_cta_title: 'Готовы поддержать ваши дела?',
+                mid_cta_desc: 'Специализированная экспертиза по российскому праву, разработка дел EB-1A/EB-2 NIW и экспертные заключения по убежищу — под надзором лицензированного адвоката.',
+                mid_cta_btn: 'Получить экспертный анализ',
                 doola_title: 'Нужны бизнес-услуги в США?',
                 doola_desc: 'Комплексное бизнес-решение: регистрация LLC, ведение бухгалтерии, налоги и аналитика. Идеально для международных предпринимателей и специалистов, выходящих на американский рынок.',
                 doola_cta: 'Запустить бизнес в США - скидка 10%',
@@ -888,6 +1001,23 @@
         // Handlers
         $('[data-setlang]').forEach(btn => btn.addEventListener('click', () => applyLang(btn.dataset.setlang)));
 
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('open');
+                navLinks.classList.toggle('open');
+            });
+            // Закрыть при клике на ссылку
+            navLinks.querySelectorAll('a').forEach(a => {
+                a.addEventListener('click', () => {
+                    hamburger.classList.remove('open');
+                    navLinks.classList.remove('open');
+                });
+            });
+        }
+
         // Year
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -915,10 +1045,8 @@
         ? 'Спасибо! Заявка отправлена.'
         : 'Thank you! Your message was sent.';
       alert(msg);
-      // Ничего не блокируем. Браузер отправит форму на Netlify и откроет /success
     });
   }
-        }
 
         // Animation on scroll
         const observerOptions = {
@@ -943,5 +1071,24 @@
             observer.observe(el);
         });
     </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "name": "Platon Law LLC",
+  "url": "https://platon.law",
+  "description": "Specialized legal research and expert services for immigration attorneys. EB-1A/EB-2 NIW case development, political asylum expert reports, Russian legal system research.",
+  "founder": {
+    "@type": "Person",
+    "name": "Platon Shamaev",
+    "jobTitle": "Legal Research Specialist",
+    "alumniOf": "Columbia University",
+    "sameAs": "https://www.linkedin.com/in/platon-shamaev-357a2768/"
+  },
+  "areaServed": "US",
+  "serviceType": ["Legal Research", "Expert Witness", "Immigration Case Development"],
+  "knowsLanguage": ["en", "ru"]
+}
+</script>
 </body>
 </html>

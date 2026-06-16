@@ -37,7 +37,7 @@
         
         /* Header */
         header {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(102, 126, 234, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 0;
             position: fixed;
@@ -334,10 +334,10 @@
         <nav class="container">
             <div class="logo">platon<span class="law">.law</span></div>
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#projects" class="active">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -441,14 +441,6 @@
         </div>
     </footer>
 
-    <!-- Demo Navigation Panel -->
-    <div class="demo-nav">
-        <h4>DEMO панель</h4>
-        <button onclick="showOriginal()">Оригинальный сайт</button>
-        <button onclick="showProjects()">+ Projects секция</button>
-        <button onclick="showIntegration()">Полная интеграция</button>
-    </div>
-
     <script>
         // Simple i18n system
         const i18n = {
@@ -531,19 +523,6 @@
 
         // Year
         document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Demo functions
-        function showOriginal() {
-            alert('Это покажет ваш текущий сайт без изменений');
-        }
-
-        function showProjects() {
-            alert('Текущий вид - добавлена секция Projects с ИИ-кнопками');
-        }
-
-        function showIntegration() {
-            alert('Полная интеграция: Projects в главном меню + отдельные страницы для каждого проекта');
-        }
 
         // Initialize
         applyLang('ru');

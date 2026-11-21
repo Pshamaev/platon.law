@@ -592,21 +592,21 @@
                         <h3 data-i18n="service9_title">Expert Opinion Letters</h3>
                         <p data-i18n="service9_desc">Independent expert opinion letters in support of EB-1A, EB-2 NIW, and O-1 petitions. We coordinate qualified, independent subject-matter experts (PhD/MD level across 30+ fields), managing intake, expert matching, and delivery so your petition is supported by a credible, field-relevant letter.</p>
                         <p data-i18n="service9_disclaimer" style="font-size: 0.8rem; color: #888; margin-top: 0.75rem;">Letters are authored and signed by independent third-party experts. We facilitate the engagement and do not author the letters. Not legal advice; no attorney-client relationship created.</p>
-                        <a href="#contact" style="display:inline-block; margin-top: 1rem; font-weight: 500; color: #667eea; text-decoration: underline;" data-i18n="service9_cta">Request Expert Letters →</a>
+                        <a href="#contact" data-service="expert-letters" style="display:inline-block; margin-top: 1rem; font-weight: 500; color: #667eea; text-decoration: underline;" data-i18n="service9_cta">Request Expert Letters →</a>
                     </div>
                     <div class="service-card">
                         <div class="icon">🎓</div>
                         <h3 data-i18n="service10_title">Foreign Credential Evaluations</h3>
                         <p data-i18n="service10_desc">U.S. equivalency evaluations of foreign diplomas for immigration petitions: document-by-document and course-by-course reports from a NACES-member evaluation service, with rush processing available. We handle intake, certified translations and delivery, and for unusual degrees we confirm the likely equivalency with the evaluator before ordering.</p>
                         <p data-i18n="service10_disclaimer" style="font-size: 0.8rem; color: #888; margin-top: 0.75rem;">Evaluations are issued by an independent credential evaluation service. Not legal advice; no attorney-client relationship created.</p>
-                        <a href="#contact" style="display:inline-block; margin-top: 1rem; font-weight: 500; color: #667eea; text-decoration: underline;" data-i18n="service10_cta">Request an Evaluation →</a>
+                        <a href="#contact" data-service="credential-evaluation" style="display:inline-block; margin-top: 1rem; font-weight: 500; color: #667eea; text-decoration: underline;" data-i18n="service10_cta">Request an Evaluation →</a>
                     </div>
                     <div class="service-card">
                         <div class="icon">📝</div>
                         <h3 data-i18n="service11_title">Certified Translations</h3>
                         <p data-i18n="service11_desc">Translations of personal and business documents in both directions between English and Russian, English and Ukrainian, and German and Russian: diplomas, transcripts, birth and marriage certificates, letters and articles, for USCIS petitions and other U.S. uses. Every translation comes with a signed certificate of translation accuracy. From $10 per page.</p>
                         <p data-i18n="service11_disclaimer" style="font-size: 0.8rem; color: #888; margin-top: 0.75rem;">Translations are certified by the translator's signed statement of competence and accuracy. Not legal advice; no attorney-client relationship created.</p>
-                        <a href="#contact" style="display:inline-block; margin-top: 1rem; font-weight: 500; color: #667eea; text-decoration: underline;" data-i18n="service11_cta">Order a Translation →</a>
+                        <a href="#contact" data-service="translation" style="display:inline-block; margin-top: 1rem; font-weight: 500; color: #667eea; text-decoration: underline;" data-i18n="service11_cta">Order a Translation →</a>
                     </div>
                     <div class="service-card">
                         <div class="icon">🌐</div>
@@ -730,12 +730,12 @@
                             <label>Don't fill this out: <input name="bot-field" /></label>
                         </div>
                         <div class="form-group">
-                            <label for="firm-name" data-i18n="form_firm">Law Firm / Attorney Name</label>
-                            <input type="text" id="firm-name" name="firm-name" required>
+                            <label for="contact-name" data-i18n="form_contact">Your Name</label>
+                            <input type="text" id="contact-name" name="contact-name" required>
                         </div>
                         <div class="form-group">
-                            <label for="contact-name" data-i18n="form_contact">Contact Person</label>
-                            <input type="text" id="contact-name" name="contact-name" required>
+                            <label for="firm-name" data-i18n="form_firm">Company or Law Firm (optional)</label>
+                            <input type="text" id="firm-name" name="firm-name">
                         </div>
                         <div class="form-group">
                             <label for="email" data-i18n="form_email">Email</label>
@@ -755,16 +755,20 @@
                                 <option value="expert-witness" data-i18n="form_opt4">Expert Witness Services</option>
                                 <option value="case-consultation" data-i18n="form_opt5">Research Project Inquiry</option>
                                 <option value="network-referral" data-i18n="form_opt6">Attorney Network Referral</option>
+                                <option value="expert-letters" data-i18n="form_opt9">Expert Opinion Letters</option>
+                                <option value="credential-evaluation" data-i18n="form_opt10">Foreign Credential Evaluation</option>
+                                <option value="translation" data-i18n="form_opt11">Certified Translation</option>
+                                <option value="business-website" data-i18n="form_opt12">Business Website</option>
                                 <option value="business-services" data-i18n="form_opt8">US Business Services</option>
                                 <option value="other" data-i18n="form_opt7">Other Services</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="case-details" data-i18n="form_details">Case Details</label>
+                            <label for="case-details" data-i18n="form_details">Details</label>
                             <textarea id="case-details" name="case-details" rows="5" data-i18n-attr="placeholder:form_placeholder"></textarea>
                         </div>
                         <div style="text-align: center;">
-                            <button type="submit" class="cta-button" data-i18n="form_submit">Request Consultation</button>
+                            <button type="submit" class="cta-button" data-i18n="form_submit">Send Request</button>
                         </div>
                     </form>
                 </div>
@@ -866,8 +870,8 @@
                 timeline7_desc: 'Completed the Fundamentals of Immigration Law course (NOMAS), earning the Foundations of Immigration Legal Services credential from No Mas Legal Clinic. Foundational training in U.S. immigration law.',
                 contact_title: 'Contact for Legal Services',
                 contact_intro: 'Ready to discuss how my expertise can support your immigration cases? Let\'s explore collaboration opportunities.',
-                form_firm: 'Law Firm / Attorney Name',
-                form_contact: 'Contact Person',
+                form_firm: 'Company or Law Firm (optional)',
+                form_contact: 'Your Name',
                 form_email: 'Email',
                 form_phone: 'Phone Number',
                 form_service: 'Service Needed',
@@ -880,9 +884,13 @@
                 form_opt6: 'Attorney Network Referral',
                 form_opt7: 'Other Services',
                 form_opt8: 'US Business Services',
-                form_details: 'Case Details',
-                form_placeholder: 'Please describe the case and specific expertise needed...',
-                form_submit: 'Request Consultation',
+                form_opt9: 'Expert Opinion Letters',
+                form_opt10: 'Foreign Credential Evaluation',
+                form_opt11: 'Certified Translation',
+                form_opt12: 'Business Website',
+                form_details: 'Details',
+                form_placeholder: 'Briefly describe what you need...',
+                form_submit: 'Send Request',
                 footer_rights: 'All rights reserved.',
                 footer_services: 'Legal Research Services | Expert Witness | Case Development Support',
                 footer_disclaimer_title: 'Professional Disclaimer:',
@@ -970,8 +978,8 @@
                 timeline7_desc: 'Completed the Fundamentals of Immigration Law course (NOMAS), earning the Foundations of Immigration Legal Services credential from No Mas Legal Clinic. Foundational training in U.S. immigration law.',
                 contact_title: 'Контакты для юридических услуг',
                 contact_intro: 'Готовы обсудить, как моя экспертиза может поддержать ваши иммиграционные дела? Давайте изучим возможности сотрудничества.',
-                form_firm: 'Юридическая фирма / Имя адвоката',
-                form_contact: 'Контактное лицо',
+                form_firm: 'Компания или юридическая фирма (необязательно)',
+                form_contact: 'Ваше имя',
                 form_email: 'Электронная почта',
                 form_phone: 'Номер телефона',
                 form_service: 'Необходимая услуга',
@@ -984,9 +992,13 @@
                 form_opt6: 'Направление к адвокатской сети',
                 form_opt7: 'Другие услуги',
                 form_opt8: 'Бизнес-услуги США',
-                form_details: 'Детали дела',
-                form_placeholder: 'Пожалуйста, опишите дело и необходимую экспертизу...',
-                form_submit: 'Запросить консультацию',
+                form_opt9: 'Экспертные заключения',
+                form_opt10: 'Оценка иностранного диплома',
+                form_opt11: 'Заверенный перевод',
+                form_opt12: 'Бизнес-сайт',
+                form_details: 'Подробности',
+                form_placeholder: 'Коротко опишите, что вам нужно...',
+                form_submit: 'Отправить запрос',
                 footer_rights: 'Все права защищены.',
                 footer_services: 'Услуги правовых исследований | Эксперт-свидетель | Поддержка в разработке дел',
                 footer_disclaimer_title: 'Профессиональный отказ от ответственности:',
@@ -1117,6 +1129,13 @@
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
         });
+    
+        document.querySelectorAll('a[data-service]').forEach(function (a) {
+            a.addEventListener('click', function () {
+                var sel = document.getElementById('service-type');
+                if (sel) sel.value = a.getAttribute('data-service');
+            });
+        });
     </script>
 <script type="application/ld+json">
 {
@@ -1136,6 +1155,6 @@
   "serviceType": ["Legal Research", "Expert Witness", "Immigration Case Development"],
   "knowsLanguage": ["en", "ru"]
 }
-</script>
+    </script>
 </body>
 </html>

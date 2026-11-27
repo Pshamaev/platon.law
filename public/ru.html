@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Платон Шамаев | Услуги для русскоязычных клиентов</title>
+    <meta name="description" content="Заключения о праве штатов США для российских судов, заверенные переводы, оценка дипломов, бизнес в США и обучение юристов работе с AI.">
+    <meta property="og:title" content="Платон Шамаев | Услуги для русскоязычных клиентов">
+    <meta property="og:description" content="Заключения о праве штатов США для российских судов, переводы, оценка дипломов, бизнес в США, обучение AI.">
+    <meta property="og:image" content="https://platon.law/platon-portrait.jpg">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230E1626'/><text x='50' y='70' font-size='62' text-anchor='middle' fill='%23C8B08A' font-family='Georgia'>P</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --night: #0E1626; --night-2: #131D30; --night-rule: #1F2A3D; --night-line: #3A465B; --paper: #EEF0F3; --ink: #0E1626; --muted: #4A5466; --rule: #C9CFD8; --brass: #C8B08A; --brass-deep: #9C7F4E; --serif: 'Spectral', Georgia, serif; --sans: 'Golos Text', 'Segoe UI', Arial, sans-serif; --gutter: 88px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--sans); font-size: 17px; line-height: 1.6; color: var(--ink); background: var(--paper); }
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+        .wrap { max-width: 1280px; margin: 0 auto; padding: 0 var(--gutter); }
+        h1, h2, h3 { font-family: var(--serif); font-weight: 400; }
+        .btn { display: inline-block; font: 600 16px var(--sans); padding: 14px 26px; border-radius: 2px; text-decoration: none; cursor: pointer; border: 0; background: var(--brass); color: var(--night); }
+        .btn:hover { background: #D6C19E; }
+
+        .hero { background: var(--night); color: #E8ECF2; overflow: hidden; }
+        .topbar { border-bottom: 1px solid var(--night-rule); }
+        .topbar .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 22px; padding-bottom: 22px; }
+        .logo { font-family: var(--serif); font-size: 22px; font-weight: 500; color: #fff; text-decoration: none; }
+        .topbar nav { display: flex; gap: 24px; font-size: 15px; }
+        .topbar nav a { color: #C3CAD5; text-decoration: none; }
+        .topbar nav a:hover { color: #fff; }
+        .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); min-height: 520px; }
+        .hero-text { align-self: center; padding: 64px 0 80px; }
+        .hero h1 { font-size: clamp(36px, 4.6vw, 56px); line-height: 1.08; color: #fff; max-width: 640px; margin-bottom: 20px; }
+        .hero p { color: #AEB7C5; font-size: 18px; max-width: 560px; margin-bottom: 30px; }
+        .hero-photo { position: relative; min-height: 360px; }
+        .hero-photo img { position: absolute; right: -40px; bottom: 0; height: 100%; max-height: 580px; width: auto; }
+
+        .proof { background: var(--night-2); color: #C3CAD5; font-size: 15px; line-height: 1.5; }
+        .proof .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; padding-top: 24px; padding-bottom: 24px; }
+        .proof strong { display: block; color: #fff; font-weight: 500; }
+
+        .section { padding: 80px 0 40px; }
+        .section h2 { font-size: 40px; line-height: 1.15; margin-bottom: 28px; }
+        .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+        .card { background: #fff; border-top: 2px solid var(--night); padding: 26px 28px 28px; }
+        .card h3 { font-size: 23px; font-weight: 500; margin-bottom: 8px; }
+        .card p { font-size: 15px; color: var(--muted); margin-bottom: 10px; }
+        .card a { font-size: 15px; color: var(--brass-deep); }
+        .card .note { font-size: 13px; }
+        .card-main { grid-column: 1 / -1; background: var(--night); border-top-color: var(--brass); display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 40px; }
+        .card-main h3 { color: #fff; }
+        .card-main p { color: #C3CAD5; }
+        .card-main a { color: #E9DCC3; }
+
+        .about { background: var(--night); color: #C3CAD5; padding: 80px 0 88px; margin-top: 56px; }
+        .about .wrap { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 64px; }
+        .about h2 { font-size: 40px; line-height: 1.15; color: #fff; }
+        .about p { margin-bottom: 16px; max-width: 640px; }
+
+        .contact { padding: 80px 0 96px; }
+        .contact-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 64px; }
+        .contact h2 { font-size: 40px; line-height: 1.15; margin-bottom: 16px; }
+        .contact-aside p { color: var(--muted); margin-bottom: 14px; }
+        .contact-aside a { color: var(--ink); }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; font: 400 16px var(--sans); color: var(--ink); background: #fff; border: 1px solid var(--rule); border-radius: 2px; padding: 12px 14px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--ink); outline: none; }
+
+        footer { background: var(--night); color: #AEB7C5; font-size: 14px; padding: 36px 0; }
+        footer p { margin-bottom: 8px; max-width: 900px; }
+        footer a { color: #fff; }
+
+        @media (max-width: 960px) {
+            :root { --gutter: 24px; }
+            .topbar nav { display: none; }
+            .hero-grid, .cards, .card-main, .about .wrap, .contact-grid { grid-template-columns: 1fr; }
+            .hero-text { padding: 44px 0 8px; }
+            .hero-photo { min-height: 0; height: 380px; }
+            .hero-photo img { right: 50%; transform: translateX(50%); height: 380px; }
+            .proof .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+            .card-main { gap: 8px; }
+            .about .wrap { gap: 24px; }
+            .section h2, .about h2, .contact h2 { font-size: 32px; }
+        }
+        @media (max-width: 480px) { .proof .wrap { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="topbar">
+            <div class="wrap">
+                <a class="logo" href="/ru">Платон Шамаев</a>
+                <nav aria-label="Разделы">
+                    <a href="#uslugi">Услуги</a>
+                    <a href="#obo-mne">Обо мне</a>
+                    <a href="#zayavka">Заявка</a>
+                    <a href="/" lang="en">English</a>
+                </nav>
+            </div>
+        </div>
+        <div class="wrap hero-grid">
+            <div class="hero-text">
+                <h1>Право США и документы для США, на русском языке.</h1>
+                <p>Заключения о праве штатов для российских судов, заверенные переводы, оценка дипломов, бизнес в США и обучение юристов работе с AI.</p>
+                <a href="#zayavka" class="btn">Описать задачу</a>
+            </div>
+            <div class="hero-photo">
+                <img src="platon-portrait.jpg" alt="Платон Шамаев" width="853" height="1066">
+            </div>
+        </div>
+    </section>
+
+    <section class="proof" aria-label="Квалификация">
+        <div class="wrap">
+            <div><strong>Адвокат с 2009 года</strong>С 2010 года в Адвокатской палате города Москвы, статус приостановлен в 2022</div>
+            <div><strong>EB-2 NIW одобрена</strong>Моя собственная петиция</div>
+            <div><strong>Columbia University</strong>Human Rights Advocates Program, 2019</div>
+            <div><strong>Synergy Law Club</strong>Сообщество более 2,500 русскоязычных юристов</div>
+        </div>
+    </section>
+
+    <section class="section" id="uslugi">
+        <div class="wrap">
+            <h2>Услуги</h2>
+            <div class="cards">
+                <div class="card card-main">
+                    <h3>Право штата США в российском суде</h3>
+                    <div>
+                        <p>Письменные заключения о содержании права штатов США для российских судов (ст. 1191 ГК РФ): нормы в редакции на нужную дату, полные тексты решений судов штата, переводы на русский язык и индекс приложений. Для споров о недвижимости в США, наследстве, разделе имущества супругов и долях в LLC.</p>
+                        <p>Пример: заключение по праву Флориды для дела в московском суде, 55 страниц, 32 решения судов Флориды, более 70 документов.</p>
+                        <a href="/pravo-ssha">Подробнее о заключениях</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Заверенные переводы</h3>
+                    <p>Переводы личных и деловых документов в обе стороны между английским и русским, английским и украинским, немецким и русским: дипломы, приложения к ним, свидетельства о рождении и браке, письма и статьи. Для петиций в USCIS и других целей в США. К каждому переводу прилагается подписанный сертификат точности. От $10 за страницу.</p>
+                    <a href="#zayavka" data-service="perevod">Заказать перевод</a>
+                </div>
+                <div class="card">
+                    <h3>Оценка иностранных дипломов</h3>
+                    <p>Оценка эквивалентности диплома американскому образованию для иммиграционных петиций: по документам (document-by-document) или по курсам (course-by-course), от оценочной службы, входящей в NACES. Есть срочное оформление. По нестандартным дипломам заранее уточняем у оценщика вероятную эквивалентность.</p>
+                    <a href="#zayavka" data-service="ocenka">Заказать оценку</a>
+                </div>
+                <div class="card">
+                    <h3>Обучение юристов работе с AI</h3>
+                    <p>Программа, которую я написал сам: как юристу построить свою рабочую систему на AI, от базы знаний и шаблонов до проверки черновика по документам. Обучение индивидуальное, под вашу практику.</p>
+                    <a href="#zayavka" data-service="obuchenie">Узнать подробности</a>
+                </div>
+                <div class="card">
+                    <h3>Бизнес в США</h3>
+                    <p>Одностраничный сайт с корпоративной почтой и формой заявки за 48 часов, $400. Регистрация LLC, бухгалтерия и налоги через партнёра doola, скидка 10% по коду DOOLAPLATON10. Бизнес-планы для NIW и EB-1A от партнёра L.Mel Marketing.</p>
+                    <a href="/business" lang="en">Подробнее (на английском)</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="obo-mne">
+        <div class="wrap">
+            <h2>Две правовые системы</h2>
+            <div>
+                <p>Начинал следователем прокуратуры в Якутии (2003-2006), затем тринадцать лет был адвокатом: статус с 2009 года, с 2010 года в Адвокатской палате города Москвы, в 2022 году статус приостановлен.</p>
+                <p>В 2018 году выступал в ООН в Женеве, в 2019 году окончил Human Rights Advocates Program Колумбийского университета. Руковожу Synergy Law Club, сообществом более 2,500 русскоязычных юристов.</p>
+                <p>Моя петиция EB-2 NIW одобрена. Живу и работаю в Моргантауне, Западная Виргиния. Разработал CaseBuilder, AI-платформу для подготовки петиций, и Довод, AI-ассистента для российских юристов.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="zayavka">
+        <div class="wrap contact-grid">
+            <div class="contact-aside">
+                <h2>Описать задачу</h2>
+                <p>Напишите в двух-трёх строках, что нужно. Отвечаю письменно.</p>
+                <p>Telegram: <a href="https://t.me/Platon_law" target="_blank" rel="noopener">@Platon_law</a></p>
+            </div>
+            <form name="ru" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/success">
+                <input type="hidden" name="form-name" value="ru">
+                <div style="display: none;"><label>Не заполняйте: <input name="bot-field"></label></div>
+                <div class="form-group"><label for="ru-name">Имя</label><input type="text" id="ru-name" name="name" required></div>
+                <div class="form-group"><label for="ru-contact">Email или Telegram</label><input type="text" id="ru-contact" name="contact" required></div>
+                <div class="form-group">
+                    <label for="ru-service">Что нужно</label>
+                    <select id="ru-service" name="service">
+                        <option value="">Выберите</option>
+                        <option value="zaklyuchenie">Заключение о праве штата США</option>
+                        <option value="perevod">Заверенный перевод</option>
+                        <option value="ocenka">Оценка диплома</option>
+                        <option value="obuchenie">Обучение работе с AI</option>
+                        <option value="biznes">Бизнес в США, сайт</option>
+                        <option value="drugoe">Другое</option>
+                    </select>
+                </div>
+                <div class="form-group"><label for="ru-details">Подробности</label><textarea id="ru-details" name="details" rows="5"></textarea></div>
+                <p style="font-size: 13px; color: var(--muted); margin-bottom: 14px;">Пожалуйста, не отправляйте через форму документы и персональные данные. Опишите задачу в общих словах, документы передаются отдельно, когда договоримся о работе.</p>
+                <button type="submit" class="btn">Отправить</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrap">
+            <p>Платон Шамаев не является адвокатом США и не допущен к юридической практике ни в одном штате. Информация на сайте не является юридической консультацией по праву США. Оплата со счёта в США или с карты зарубежного банка, другие способы обсуждаются.</p>
+            <p>&copy; 2026 Platon Law LLC. <a href="/" lang="en">English version</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[data-service]').forEach(function (a) {
+            a.addEventListener('click', function () {
+                var sel = document.getElementById('ru-service');
+                if (sel) sel.value = a.getAttribute('data-service');
+            });
+        });
+    </script>
+</body>
+</html>
